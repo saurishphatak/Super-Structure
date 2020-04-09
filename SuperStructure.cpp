@@ -49,3 +49,34 @@ struct Node
         nextInMap = nullptr;
     }
 };
+
+// Define a class SuperStructure
+class SuperStructure
+{
+    /**
+     * Fields : 
+     * 
+     * table : points to the Trump Tower
+     * size : contains the size of the Trump Tower
+     * head : points to the head of the Linked List
+     * tail : points to the tail of the Linked List
+     * root : points to the root of the BST
+     */
+    Node **table;
+    int size;
+    Node *head;
+    Node *tail;
+    Node *root;
+
+public:
+    // Constructor
+    SuperStructure(int size = 11)
+    {
+        // Initialize the fields
+        this->size = size;
+        table = new Node *[this->size];
+        head = nullptr;
+        tail = nullptr;
+        root = nullptr;
+    }
+};

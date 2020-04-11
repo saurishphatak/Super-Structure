@@ -75,6 +75,10 @@ public:
         // Initialize the fields
         this->size = size;
         table = new Node *[this->size];
+        // Make every pointer in the Array of Pointers nullptr
+        for (int i = 0; i < this->size; i++)
+            table[i] = nullptr;
+
         head = nullptr;
         tail = nullptr;
         root = nullptr;

@@ -79,6 +79,7 @@ public:
         for (int i = 0; i < this->size; i++)
             table[i] = nullptr;
 
+        // Initialize rest of the fields
         head = nullptr;
         tail = nullptr;
         root = nullptr;
@@ -91,7 +92,10 @@ public:
      * put : adds an Entry (Node) in the Hash Table and then calls
      *       other methods like addToLinkedList and addToTree
      *       to add the Entry (Node) there 
+     * 
+     * addToLinkedList : adds the Node to the Linked List
      */
+    // Method to calculate the hash of the given key
     int getHash(int key)
     {
         // A simple hash function is used
@@ -99,6 +103,7 @@ public:
         return key % size;
     }
 
+    // Method to add the Entry to the Super Structure
     bool put(int key, int value)
     {
         // Create a new Entry
@@ -128,5 +133,35 @@ public:
             // Now point the table[hash] to the new Node
             table[hash] = newNode;
         }
+
+        // Add the Node in the Linked List
+
+        // Add the Node in the BST
+    }
+
+    // Method to add the Node to the Linked List
+    bool addToLinkedList(int value, Node *nodeToBeAdded)
+    {
+        // If the head and tail are null
+        if (!head && !tail)
+        {
+            // It means this is the first Node
+            // Point the head to this Node
+            head = nodeToBeAdded;
+        }
+
+        // If this is not the first Node
+        else
+        {
+            // Add the new Node after the tail
+            tail->next = nodeToBeAdded;
+        }
+
+        // Point the tail to the new Node
+        tail = nodeToBeAdded;
+
+        // Addition successful
+        // return true
+        return true;
     }
 };

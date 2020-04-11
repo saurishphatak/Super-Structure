@@ -79,4 +79,17 @@ public:
         tail = nullptr;
         root = nullptr;
     }
+
+    /**
+     * Methods : 
+     * 
+     * getHash : calculates the hash of a given key
+     * 
+     */
+    int getHash(int key)
+    {
+        // A simple hash function is used
+        // returns key mod size
+        return key % size;
+    }
 };

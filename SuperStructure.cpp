@@ -9,6 +9,7 @@
  * --------------------------------------------------------------------------------
  * 
  * Revision History : 
+ * 2020-April-11	[SP]: put() method completed
  * 2020-April-09	[SP] : Created
  * --------------------------------------------------------------------------------
  */
@@ -75,6 +76,11 @@ public:
         // Initialize the fields
         this->size = size;
         table = new Node *[this->size];
+        // Make every pointer in the Array of Pointers nullptr
+        for (int i = 0; i < this->size; i++)
+            table[i] = nullptr;
+
+        // Initialize rest of the fields
         head = nullptr;
         tail = nullptr;
         root = nullptr;
@@ -85,11 +91,136 @@ public:
      * 
      * getHash : calculates the hash of a given key
      * 
+     * put : adds an Entry (Node) in the Hash Table and then calls
+     *       other methods like addToLinkedList and addToTree
+     *       to add the Entry (Node) there 
+     * 
+     * addToLinkedList : adds the Node to the Linked List
+     * 
+     * addToTree : adds the Node to the tree 
+     *
      */
+
+    // Method to calculate the hash of the given key
     int getHash(int key)
     {
         // A simple hash function is used
         // returns key mod size
         return key % size;
+    }
+
+    // Method to add the Entry to the Super Structure
+    bool put(int key, int value)
+    {
+        // Create a new Entry
+        Node *newNode = new Node(key, value);
+
+        // If the allocation has been successful
+        if (!newNode)
+        {
+            // The allocation has been unsuccesful
+            // return false
+            return false;
+        }
+
+        // The allocation has been successful
+        // Find the hash of the key
+        int hash = getHash(key);
+
+        // Add the Entry to the Hash Table
+        // If the table[hash] is nullptr
+        if (!table[hash])
+        {
+            // An Entry already exists
+            // Simple add the new Entry before the old one
+            // 1 - newNode->next points to table[hash] (old Entry)
+            newNode->next = table[hash];
+
+            // Now point the table[hash] to the new Node
+            table[hash] = newNode;
+        }
+
+        // Add the Node in the Linked List
+        if (!addToLinkedList(newNode))
+        {
+            // Addition to the Linked List failed
+            // return false
+            return false;
+        }
+
+        // Check the status of addition to Tree
+        bool status = false;
+
+        // Add the Node in the BST
+        root = addToTree(newNode, root, status);
+
+        // If the addition to the Tree failed
+        if (!status)
+        {
+            // Return false
+            return false;
+        }
+    }
+
+    // Method to add the Node to the Linked List
+    bool addToLinkedList(Node *nodeToBeAdded)
+    {
+        // If the head and tail are null
+        if (!head && !tail)
+        {
+            // It means this is the first Node
+            // Point the head to this Node
+            head = nodeToBeAdded;
+        }
+
+        // If this is not the first Node
+        else
+        {
+            // Add the new Node after the tail
+            tail->next = nodeToBeAdded;
+        }
+
+        // Point the tail to the new Node
+        tail = nodeToBeAdded;
+
+        // Addition successful
+        // return true
+        return true;
+    }
+
+    // Method to add the Node to the Tree
+    Node *addToTree(Node *nodeToBeAdded, Node *currentNode, bool &status)
+    {
+        // If the currentNode is nullptr
+        if (!currentNode)
+        {
+            // Assign the nodeToBeAdded to the currentNode
+            currentNode = nodeToBeAdded;
+
+            // Successful addition
+            // Make the status to true
+            status = true;
+        }
+
+        // If the nodeToBeAdded's value is greater than the value
+        // of nodeToBeAdded
+        if (nodeToBeAdded->value > currentNode->value)
+        {
+            // Call the addToTree function again with
+            // currentNode->right
+            currentNode->right = addToTree(nodeToBeAdded, currentNode->right, status);
+        }
+
+        // If the nodeToBeAdded's value is less than or equal to
+        // the currentNode's value
+        else
+        {
+            // Call the addToTree function with
+            // currentNode->left
+            currentNode->left = addToTree(nodeToBeAdded, currentNode->left, status);
+        }
+
+        // Return the currentNode
+        return currentNode;
     }
 };

@@ -9,6 +9,7 @@
  * --------------------------------------------------------------------------------
  * 
  * Revision History : 
+ * 2020-April-11	[SP]: put() method completed
  * 2020-April-09	[SP] : Created
  * --------------------------------------------------------------------------------
  */
@@ -89,14 +90,17 @@ public:
      * Methods : 
      * 
      * getHash : calculates the hash of a given key
+     * 
      * put : adds an Entry (Node) in the Hash Table and then calls
      *       other methods like addToLinkedList and addToTree
      *       to add the Entry (Node) there 
      * 
      * addToLinkedList : adds the Node to the Linked List
+     * 
      * addToTree : adds the Node to the tree 
      *
      */
+
     // Method to calculate the hash of the given key
     int getHash(int key)
     {

@@ -143,7 +143,19 @@ public:
             // return false
             return false;
         }
+
+        // Check the status of addition to Tree
+        bool status = false;
+
         // Add the Node in the BST
+        root = addToTree(newNode, root, status);
+
+        // If the addition to the Tree failed
+        if (!status)
+        {
+            // Return false
+            return false;
+        }
     }
 
     // Method to add the Node to the Linked List
@@ -173,7 +185,7 @@ public:
     }
 
     // Method to add the Node to the Tree
-    Node *addToTree(Node *nodeToBeAdded, Node *currentNode, int &status)
+    Node *addToTree(Node *nodeToBeAdded, Node *currentNode, bool &status)
     {
         // If the currentNode is nullptr
         if (!currentNode)

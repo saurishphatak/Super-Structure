@@ -84,12 +84,45 @@ public:
      * Methods : 
      * 
      * getHash : calculates the hash of a given key
-     * 
+     * put : adds an Entry (Node) in the Hash Table and then calls
+     *       other methods like addToLinkedList and addToTree
+     *       to add the Entry (Node) there 
      */
     int getHash(int key)
     {
         // A simple hash function is used
         // returns key mod size
         return key % size;
+    }
+
+    bool put(int key, int value)
+    {
+        // Create a new Entry
+        Node *newNode = new Node(key, value);
+
+        // If the allocation has been successful
+        if (!newNode)
+        {
+            // The allocation has been unsuccesful
+            // return false
+            return false;
+        }
+
+        // The allocation has been successful
+        // Find the hash of the key
+        int hash = getHash(key);
+
+        // Add the Entry to the Hash Table
+        // If the table[hash] is nullptr
+        if (!table[hash])
+        {
+            // An Entry already exists
+            // Simple add the new Entry before the old one
+            // 1 - newNode->next points to table[hash] (old Entry)
+            newNode->next = table[hash];
+
+            // Now point the table[hash] to the new Node
+            table[hash] = newNode;
+        }
     }
 };

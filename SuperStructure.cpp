@@ -94,6 +94,8 @@ public:
      *       to add the Entry (Node) there 
      * 
      * addToLinkedList : adds the Node to the Linked List
+     * addToTree : adds the Node to the tree 
+     *
      */
     // Method to calculate the hash of the given key
     int getHash(int key)
@@ -168,5 +170,41 @@ public:
         // Addition successful
         // return true
         return true;
+    }
+
+    // Method to add the Node to the Tree
+    Node *addToTree(Node *nodeToBeAdded, Node *currentNode, int &status)
+    {
+        // If the currentNode is nullptr
+        if (!currentNode)
+        {
+            // Assign the nodeToBeAdded to the currentNode
+            currentNode = nodeToBeAdded;
+
+            // Successful addition
+            // Make the status to true
+            status = true;
+        }
+
+        // If the nodeToBeAdded's value is greater than the value
+        // of nodeToBeAdded
+        if (nodeToBeAdded->value > currentNode->value)
+        {
+            // Call the addToTree function again with
+            // currentNode->right
+            currentNode->right = addToTree(nodeToBeAdded, currentNode->right, status);
+        }
+
+        // If the nodeToBeAdded's value is less than or equal to
+        // the currentNode's value
+        else
+        {
+            // Call the addToTree function with
+            // currentNode->left
+            currentNode->left = addToTree(nodeToBeAdded, currentNode->left, status);
+        }
+
+        // Return the currentNode
+        return currentNode;
     }
 };

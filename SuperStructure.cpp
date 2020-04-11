@@ -135,12 +135,17 @@ public:
         }
 
         // Add the Node in the Linked List
-
+        if (!addToLinkedList(newNode))
+        {
+            // Addition to the Linked List failed
+            // return false
+            return false;
+        }
         // Add the Node in the BST
     }
 
     // Method to add the Node to the Linked List
-    bool addToLinkedList(int value, Node *nodeToBeAdded)
+    bool addToLinkedList(Node *nodeToBeAdded)
     {
         // If the head and tail are null
         if (!head && !tail)

@@ -69,97 +69,41 @@ class SuperStructure
     Node *tail;
     Node *root;
 
-public:
-    // Constructor
-    SuperStructure(int size = 11)
+    // Method to add the Node in the Hash Table
+    bool putInHashTable(int key, int value, Node *nodeToBeAdded)
     {
-        // Initialize the fields
-        this->size = size;
-        table = new Node *[this->size];
-        // Make every pointer in the Array of Pointers nullptr
-        for (int i = 0; i < this->size; i++)
-            table[i] = nullptr;
-
-        // Initialize rest of the fields
-        head = nullptr;
-        tail = nullptr;
-        root = nullptr;
-    }
-
-    /**
-     * Methods : 
-     * 
-     * getHash : calculates the hash of a given key
-     * 
-     * put : adds an Entry (Node) in the Hash Table and then calls
-     *       other methods like addToLinkedList and addToTree
-     *       to add the Entry (Node) there 
-     * 
-     * addToLinkedList : adds the Node to the Linked List
-     * 
-     * addToTree : adds the Node to the tree 
-     *
-     */
-
-    // Method to calculate the hash of the given key
-    int getHash(int key)
-    {
-        // A simple hash function is used
-        // returns key mod size
-        return key % size;
-    }
-
-    // Method to add the Entry to the Super Structure
-    bool put(int key, int value)
-    {
-        // Create a new Entry
-        Node *newNode = new Node(key, value);
-
-        // If the allocation has been successful
-        if (!newNode)
+        // If the node to be added is nullptr
+        if (!nodeToBeAdded)
         {
-            // The allocation has been unsuccesful
+            // Addition to the Hash Table failed
             // return false
             return false;
         }
 
-        // The allocation has been successful
+        // If the node to be added is not nullptr
         // Find the hash of the key
         int hash = getHash(key);
 
-        // Add the Entry to the Hash Table
-        // If the table[hash] is nullptr
+        // If the table[hash] is full
         if (table[hash])
         {
-            // An Entry already exists
-            // Simple add the new Entry before the old one
-            // 1 - newNode->next points to table[hash] (old Entry)
-            newNode->nextInMap = table[hash];
+            // It means that another Node with the same key
+            // already exists
+            // Add the new Node before the old Node
+            // Point the node to be added's nextInMap to
+            // the existing Node at table[hash]
+            nodeToBeAdded->nextInMap = table[hash];
         }
 
-        // Now point the table[hash] to the newNode
-        table[hash] = newNode;
+        // If the table[hash] is not full
+        // Or the new Node has been added before the
+        // old Node
+        // Simply point the table[hash] to the new Node
+        table[hash] = nodeToBeAdded;
 
-        // Add the Node in the Linked List
-        if (!addToLinkedList(newNode))
-        {
-            // Addition to the Linked List failed
-            // return false
-            return false;
-        }
-
-        // Check the status of addition to Tree
-        bool status = false;
-
-        // Add the Node in the BST
-        root = addToTree(newNode, root, status);
-
-        // If the addition to the Tree failed
-        if (!status)
-        {
-            // Return false
-            return false;
-        }
+        // Addition to the Hash Table successful
+        // Return true
+        return true;
     }
 
     // Method to add the Node to the Linked List
@@ -225,6 +169,90 @@ public:
 
         // Return the currentNode
         return currentNode;
+    }
+
+public:
+    // Constructor
+    SuperStructure(int size = 11)
+    {
+        // Initialize the fields
+        this->size = size;
+        table = new Node *[this->size];
+        // Make every pointer in the Array of Pointers nullptr
+        for (int i = 0; i < this->size; i++)
+            table[i] = nullptr;
+
+        // Initialize rest of the fields
+        head = nullptr;
+        tail = nullptr;
+        root = nullptr;
+    }
+
+    /**
+     * Methods : 
+     * 
+     * getHash : calculates the hash of a given key
+     * 
+     * put : adds the Entry to the Super Structure (wrapper function)
+     * 
+     * putInHashTable : adds the Entry to the Hash Table
+     * 
+     * addToLinkedList : adds the Node to the Linked List
+     * 
+     * addToTree : adds the Node to the tree 
+     *
+     */
+
+    // Method to calculate the hash of the given key
+    int getHash(int key)
+    {
+        // A simple hash function is used
+        // returns key mod size
+        return key % size;
+    }
+
+    // Method to add the Entry to the Super Structure
+    bool put(int key, int value)
+    {
+        // Create a newNode
+        Node *newNode = new Node(key, value);
+
+        // If the allocation failed
+        if (!newNode)
+        {
+            // Return false
+            return false;
+        }
+
+        // Allocation successful
+        // Add the Node to the Hash Table
+        if (!putInHashTable(key, value, newNode))
+        {
+            // Addition to the Hash Table failed
+            // Return false
+            return false;
+        }
+
+        // Add the Node in the Linked List
+        if (!addToLinkedList(newNode))
+        {
+            // Addition to the Linked List failed
+            // return false
+            return false;
+        }
+
+        // Check the status of addition to Tree
+        bool status = false;
+
+        // Add the Node in the BST
+        root = addToTree(newNode, root, status);
+
+        // If the addition to the Tree failed
+        if (!status)
+        {
+            // Return false
+            return false;
+        }
     }
 
     // Print Method

@@ -233,7 +233,7 @@ class SuperStructure
     }
 
     // Method to remove a value from the Tree
-    Node *removeFromTree(Node *currentNode, int value, bool &status)
+    Node *removeFromTree(Node *currentNode, int key, bool &status)
     {
         // If the currentNode is nullptr
         if (!currentNode)
@@ -242,15 +242,22 @@ class SuperStructure
             return currentNode;
         }
 
-        // If the given value is more than the currentNode's value
-        if (value > currentNode->value)
+        // If the given key is more than the currentNode's key
+        if (key > currentNode->key)
         {
             // Call the removeFromTree function with currentNode->right
-            currentNode->right = removeFromTree(currentNode->right, value, status);
+            currentNode->right = removeFromTree(currentNode->right, key, status);
         }
 
-        // If the value was found
-        if (value == currentNode->value)
+        // If the given key is less than the currentNode's key
+        if (key < currentNode->key)
+        {
+            // Call the removeFromTree function with currentNode->left
+            currentNode->left = removeFromTree(currentNode->left, key, status);
+        }
+
+        // If the key was found
+        if (key == currentNode->key)
         {
             // If this node has no children
             if (!currentNode->left && !currentNode->right)
@@ -294,7 +301,7 @@ class SuperStructure
                 }
 
                 // Now first take care of the successor's child
-                currentNode->right = removeFromTree(currentNode->right, successor->value, status);
+                currentNode->right = removeFromTree(currentNode->right, successor->key, status);
 
                 // If the successor's child has been taken care of
                 if (status)
@@ -318,13 +325,6 @@ class SuperStructure
                 // Return the successor
                 return successor;
             }
-        }
-
-        // If the given value is less than the currentNode's value
-        if (value < currentNode->value)
-        {
-            // Call the removeFromTree function with currentNode->left
-            currentNode->left = removeFromTree(currentNode->left, value, status);
         }
 
         // Everything done

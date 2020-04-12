@@ -18,45 +18,16 @@
 
 using namespace std;
 
-void SuperStructure::print()
-{
-    cout << "\nEntries in the Hash Table :\n\n";
-
-    // Print the hash entries first
-    for (int i = 0; i < this->size; i++)
-    {
-        // Print the number of row
-        cout << i << " ==> ";
-
-        for (Node *current = table[i]; current; current = current->nextInMap)
-        {
-            cout << "[Key : " << current->key << " Value : " << current->value << "] ";
-        }
-
-        cout << "\n\n";
-    }
-}
-
-void SuperStructure::printLL()
-{
-    cout << "HEAD";
-    // Start from the head
-    for (Node *currentNode = head; currentNode; currentNode = currentNode->next)
-    {
-        cout << " --> " << currentNode->value;
-    }
-
-    cout << endl;
-}
-
 int main()
 {
     int key;
     int value;
 
+    // Create a new Super Structure
     SuperStructure *test = new SuperStructure(11);
 
-    while (cout << "Key : ",
+    // Take input of key-value pairs
+    while (cout << "Key (0 to stop) :",
            cin >> key,
            key)
     {
@@ -67,7 +38,13 @@ int main()
         test->put(key, value);
     }
 
-    
-    // Print LL
-    test->printLL();
+    // Print Tree
+    test->printInAscendingOrder();
+
+    // Remove some value
+    test->remove(3);
+
+    test->printInsertionSequence();
+    test->printInAscendingOrder();
+    test->printHashTable();
 }

@@ -249,13 +249,6 @@ class SuperStructure
             currentNode->right = removeFromTree(currentNode->right, value, status);
         }
 
-        // If the given value is less than or equal to the currentNode's value
-        if (value <= currentNode->value)
-        {
-            // Call the removeFromTree function with currentNode->left
-            currentNode->left = removeFromTree(currentNode->left, value, status);
-        }
-
         // If the value was found
         if (value == currentNode->value)
         {
@@ -321,12 +314,41 @@ class SuperStructure
 
                 // If the successor's child hasn't been taken care of
                 // It means that the removal of currentNode has been ONE GIGANTIC FAIL
+
+                // Return the successor
+                return successor;
             }
+        }
+
+        // If the given value is less than the currentNode's value
+        if (value < currentNode->value)
+        {
+            // Call the removeFromTree function with currentNode->left
+            currentNode->left = removeFromTree(currentNode->left, value, status);
         }
 
         // Everything done
         // Return the currentNode
         return currentNode;
+    }
+
+    // Method to print values in Ascending Order
+    void printAscendingOrder(Node *currentNode)
+    {
+        // If the currentNode is nullptr
+        if (!currentNode)
+        {
+            // Simply return
+            return;
+        }
+        // Go to the currentNode's left first
+        printAscendingOrder(currentNode->left);
+
+        // Now print the value
+        cout << "[Key : " << currentNode->key << ", Value : " << currentNode->value << "]" << endl;
+
+        // Now go to the currentNode's right
+        printAscendingOrder(currentNode->right);
     }
 
 public:
@@ -362,6 +384,8 @@ public:
      * removeFromLinkedList : removes a value from the Linked List
      * 
      * removeFromTree : removes a value from the Tree
+     * 
+     * printInAscendingOrder : prints the key-value pair in Ascending Order
      */
 
     // Method to calculate the hash of the given key
@@ -421,4 +445,8 @@ public:
 
     // Print LL
     void printLL();
+
+    // Print Tree
+    void printT();
+
 };

@@ -233,6 +233,7 @@ private:
         return false;
     }
 
+public:
     // Method to remove a key-value pair from the Tree
     Node *removeFromTree(Node *currentNode, int key, bool &status)
     {
@@ -339,22 +340,6 @@ private:
         // Find the hash of the given value
         int hash = getHash(key);
 
-        // If the table[hash] is empty
-        if (!table[hash])
-        {
-            // Then it means that there is only ONE
-            // Entry in this row
-            // Simply delete this Entry
-            delete table[hash];
-
-            // Make the table[hash] nullptr
-            table[hash] = nullptr;
-
-            // Removal from Super Structure successfull
-            // return true
-            return true;
-        }
-
         // If the table[hash] is not empty
         if (table[hash])
         {
@@ -367,7 +352,7 @@ private:
 
             // Simply point the table[hash] to the
             // next Entry in the row
-            table[hash] = currentEntry->next;
+            table[hash] = currentEntry->nextInMap;
 
             // Delete the current Entry
             delete currentEntry;
@@ -439,6 +424,10 @@ public:
      * 
      * printInAscendingOrder : prints the key-value pair in Ascending Order
      * 
+     * printHashTable : prints the Entire Hash Table
+     * 
+     * printInsertionSequence : prints the key-value pair in the order they were inserted
+     * 
      * printHashTable : prints the entire Hash Table
      */
 
@@ -494,6 +483,15 @@ public:
         }
     }
 
+    // Method that prints the key-value pair in Ascending Order
+    void printInAscendingOrder()
+    {
+        cout << "\n\nAscending Order : " << endl;
+
+        // Call the printAscending method and pass ther root
+        printAscendingOrder(root);
+    }
+
     // Method to print the Entire Hash Table
     void printHashTable()
     {
@@ -535,5 +533,12 @@ public:
         // Once the Linked List has been printed
         // Print a blank line for better formatting
         cout << endl;
+    }
+
+    // Method to remove a key-value pair from the tree
+    void remove(int key)
+    {
+        bool status = false;
+        root = removeFromTree(root, key, status);
     }
 };

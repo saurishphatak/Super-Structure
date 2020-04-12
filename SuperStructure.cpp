@@ -55,6 +55,7 @@ struct Node
 // Define a class SuperStructure
 class SuperStructure
 {
+private:
     /**
      * Fields : 
      * 
@@ -332,6 +333,55 @@ class SuperStructure
         return currentNode;
     }
 
+    // Method to remove a key-value pair from the Super Structure
+    bool removeFromSuperStructure(int key)
+    {
+        // Find the hash of the given value
+        int hash = getHash(key);
+
+        // If the table[hash] is empty
+        if (!table[hash])
+        {
+            // Then it means that there is only ONE
+            // Entry in this row
+            // Simply delete this Entry
+            delete table[hash];
+
+            // Make the table[hash] nullptr
+            table[hash] = nullptr;
+
+            // Removal from Super Structure successfull
+            // return true
+            return true;
+        }
+
+        // If the table[hash] is not empty
+        if (table[hash])
+        {
+            // It means that there are MORE THAN ONE
+            // Entries in this row
+
+            // Capture the current Entry pointed to
+            // by the table[hash]
+            Node *currentEntry = table[hash];
+
+            // Simply point the table[hash] to the
+            // next Entry in the row
+            table[hash] = currentEntry->next;
+
+            // Delete the current Entry
+            delete currentEntry;
+
+            // Removal from Super Structure successful
+            // return true
+            return true;
+        }
+
+        // Removal from the Super Structure unsuccessful
+        // return false
+        return false;
+    }
+
     // Method to print values in Ascending Order
     void printAscendingOrder(Node *currentNode)
     {
@@ -381,9 +431,11 @@ public:
      * 
      * addToTree : adds the Node to the tree 
      * 
-     * removeFromLinkedList : removes a value from the Linked List
+     * removeFromLinkedList : removes a node from the Linked List
      * 
-     * removeFromTree : removes a value from the Tree
+     * removeFromTree : removes a node from the Tree
+     * 
+     * removeFromSuperStructure : removed an entry from the Super Structure 
      * 
      * printInAscendingOrder : prints the key-value pair in Ascending Order
      */

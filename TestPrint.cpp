@@ -20,15 +20,20 @@ using namespace std;
 
 void SuperStructure::print()
 {
+    cout << "\nEntries in the Hash Table :\n\n";
+
     // Print the hash entries first
     for (int i = 0; i < this->size; i++)
     {
+        // Print the number of row
+        cout << i << " ==> ";
+
         for (Node *current = table[i]; current; current = current->nextInMap)
         {
             cout << "[Key : " << current->key << " Value : " << current->value << "] ";
         }
 
-        cout << endl;
+        cout << "\n\n";
     }
 }
 

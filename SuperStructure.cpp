@@ -233,7 +233,6 @@ private:
         return false;
     }
 
-public:
     // Method to remove a key-value pair from the Tree
     Node *removeFromTree(Node *currentNode, int key, bool &status)
     {
@@ -535,10 +534,38 @@ public:
         cout << endl;
     }
 
-    // Method to remove a key-value pair from the tree
-    void remove(int key)
+    // Method to remove a key-value pair from Super Structure
+    bool remove(int key)
     {
-        bool status = false;
-        root = removeFromTree(root, key, status);
+        // If the key-value pair is removed from the Linked List
+        if (removeFromLinkedList(key))
+        {
+            // Remove the key-value from the Tree
+            bool status = false;
+
+            root = removeFromTree(root, key, status);
+
+            // If the removal from the Tree is sucessful
+            if (status)
+            {
+                // Finally, remove the key-value from the Hash Table
+                // thereby removing it from the Super Structure itself
+                if (removeFromSuperStructure(key))
+                {
+                    // Successful deletion from the Hash Table
+                    // key-value pair removed from the Super Structure
+                    // return true
+                    return true;
+                }
+            }
+
+            // Removal from Tree unsuccessful
+            // return false
+            return false;
+        }
+
+        // Removal from the Linked List unsuccessful
+        // return false
+        return false;
     }
 };

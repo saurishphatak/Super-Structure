@@ -71,6 +71,34 @@ private:
     Node *tail;
     Node *root;
 
+    /**
+     * Methods : 
+     * 
+     * getHash() : calculates the hash of the given key
+     * 
+     * putInHashTable : adds the key-value pair in the Hash Table
+     * 
+     * addToLinkedList : adds the key-value pair in the Linked List
+     * 
+     * addToTree : adds the key-value pair to the Tree
+     * 
+     * removeFromLinkedList : removes the key-value pair from the Linked List
+     * 
+     * removeFromTree : removes the key-value pair from the Tree
+     * 
+     * removeFromHashTable : removes the key-value from the Hash Table
+     * 
+     * printAscendingOrder : prints the key-value pair in Ascending Order on
+     *                       the basis of key
+     */
+
+    // Method to generate the hash of the key
+    int getHash(int key)
+    {
+        // Return key % size
+        return key % this->size;
+    }
+
     // Method to add the Node in the Hash Table
     bool putInHashTable(int key, int value, Node *nodeToBeAdded)
     {
@@ -333,8 +361,8 @@ private:
         return currentNode;
     }
 
-    // Method to remove a key-value pair from the Super Structure
-    bool removeFromSuperStructure(int key)
+    // Method to remove a key-value pair from the Hash Table
+    bool removeFromHashTable(int key)
     {
         // Find the hash of the given value
         int hash = getHash(key);
@@ -404,39 +432,18 @@ public:
 
     /**
      * Methods : 
-     * 
-     * getHash : calculates the hash of a given key
-     * 
+     *
      * put : adds the Entry to the Super Structure (wrapper function)
      * 
-     * putInHashTable : adds the Entry to the Hash Table
-     * 
-     * addToLinkedList : adds the Node to the Linked List
-     * 
-     * addToTree : adds the Node to the tree 
-     * 
-     * removeFromLinkedList : removes a node from the Linked List
-     * 
-     * removeFromTree : removes a node from the Tree
-     * 
-     * removeFromSuperStructure : removed an entry from the Super Structure 
-     * 
-     * printInAscendingOrder : prints the key-value pair in Ascending Order
+     * printInAscedingOrder : wrapper function for print the key-value pairs
+     *                        in Ascending Order
      * 
      * printHashTable : prints the Entire Hash Table
      * 
      * printInsertionSequence : prints the key-value pair in the order they were inserted
      * 
-     * printHashTable : prints the entire Hash Table
+     * remove : removes the key-value pair from the Super Structure
      */
-
-    // Method to calculate the hash of the given key
-    int getHash(int key)
-    {
-        // A simple hash function is used
-        // returns key mod size
-        return key % size;
-    }
 
     // Method to add the Entry to the Super Structure
     bool put(int key, int value)
@@ -494,7 +501,7 @@ public:
     // Method to print the Entire Hash Table
     void printHashTable()
     {
-        cout << "\nHash Table : \n\n";
+        cout << "\nHash Table : \n";
 
         // Go over each row
         for (int i = 0; i < this->size; i++)
@@ -550,7 +557,7 @@ public:
             {
                 // Finally, remove the key-value from the Hash Table
                 // thereby removing it from the Super Structure itself
-                if (removeFromSuperStructure(key))
+                if (removeFromHashTable(key))
                 {
                     // Successful deletion from the Hash Table
                     // key-value pair removed from the Super Structure

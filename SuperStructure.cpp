@@ -9,9 +9,13 @@
  * --------------------------------------------------------------------------------
  * 
  * Revision History : 
+ * 2020-April-12	[SP]: remove() method completed.
+ * 2020-April-12	[SP]: printInAscendingOrder() method completed.
+ * 2020-April-12	[SP]: printInsertionSequence() method completed.
+ * 2020-April-12	[SP]: printHashTable() method completed.
  * 2020-April-12	[SP]: put() method modified.
- * 2020-April-11	[SP]: put() method completed
- * 2020-April-09	[SP] : Created
+ * 2020-April-11	[SP]: put() method completed.
+ * 2020-April-09	[SP] : Created.
  * --------------------------------------------------------------------------------
  */
 
@@ -19,7 +23,7 @@
 
 using namespace std;
 
-// Define a node
+// Define a Node
 struct Node
 {
     /**

@@ -150,17 +150,17 @@ class SuperStructure
             return currentNode;
         }
 
-        // If the nodeToBeAdded's value is greater than the value
+        // If the nodeToBeAdded's key is greater than the key
         // of nodeToBeAdded
-        if (nodeToBeAdded->value > currentNode->value)
+        if (nodeToBeAdded->key > currentNode->value)
         {
             // Call the addToTree function again with
             // currentNode->right
             currentNode->right = addToTree(nodeToBeAdded, currentNode->right, status);
         }
 
-        // If the nodeToBeAdded's value is less than or equal to
-        // the currentNode's value
+        // If the nodeToBeAdded's key is less than or equal to
+        // the currentNode's key
         else
         {
             // Call the addToTree function with
@@ -448,5 +448,4 @@ public:
 
     // Print Tree
     void printT();
-
 };

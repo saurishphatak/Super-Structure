@@ -173,7 +173,7 @@ class SuperStructure
     }
 
     // Method to remove a value from the Linked List
-    bool remove(int value)
+    bool removeFromLinkedList(int value)
     {
         // Search for the given value
         for (Node *currentNode = head, *peechu = head; currentNode; currentNode = currentNode->next)
@@ -319,4 +319,7 @@ public:
 
     // Print Method
     void print();
+
+    // Print LL
+    void printLL();
 };

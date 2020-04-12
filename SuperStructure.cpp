@@ -172,6 +172,66 @@ class SuperStructure
         return currentNode;
     }
 
+    // Method to remove a value from the Linked List
+    bool remove(int value)
+    {
+        // Search for the given value
+        for (Node *currentNode = head, *peechu = head; currentNode; currentNode = currentNode->next)
+        {
+            // If the value is found
+            if (value == currentNode->value)
+            {
+                // If this is the ONLY Node in the Linked List
+                if (head == tail)
+                {
+                    // Simply make the head and tail nullptr
+                    head = tail = nullptr;
+
+                    // Return true
+                    return true;
+                }
+
+                // If this Node is the FIRST Node in the Linked List
+                if (head == currentNode)
+                {
+                    // Simply make the head point to the next Node
+                    head = head->next;
+
+                    // Return true
+                    return true;
+                }
+
+                // If this is the LAST Node in the Linked List
+                if (tail == currentNode)
+                {
+                    // Simply point the tail to the previous Node
+                    tail = peechu;
+
+                    // Make peechu's next as null
+                    peechu->next = nullptr;
+
+                    // Return true
+                    return true;
+                }
+
+                // If the node is in BETWEEN
+                // Point the peechu's next to the next Node
+                peechu->next = currentNode->next;
+
+                // Return true
+                return true;
+            }
+
+            // Value not found
+            // Make the peechu jump ahead
+            peechu = currentNode;
+        }
+
+        // Value not found in the Linked List
+        // Return false
+        return false;
+    }
+
 public:
     // Constructor
     SuperStructure(int size = 11)
@@ -201,7 +261,8 @@ public:
      * addToLinkedList : adds the Node to the Linked List
      * 
      * addToTree : adds the Node to the tree 
-     *
+     * 
+     * removeFromLinkedList : removes a value from the Linked List
      */
 
     // Method to calculate the hash of the given key

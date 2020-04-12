@@ -37,6 +37,18 @@ void SuperStructure::print()
     }
 }
 
+void SuperStructure::printLL()
+{
+    cout << "HEAD";
+    // Start from the head
+    for (Node *currentNode = head; currentNode; currentNode = currentNode->next)
+    {
+        cout << " --> " << currentNode->value;
+    }
+
+    cout << endl;
+}
+
 int main()
 {
     int key;
@@ -55,6 +67,7 @@ int main()
         test->put(key, value);
     }
 
-    // Print
-    test->print();
+    
+    // Print LL
+    test->printLL();
 }

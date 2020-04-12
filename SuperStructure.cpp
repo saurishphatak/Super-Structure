@@ -232,6 +232,103 @@ class SuperStructure
         return false;
     }
 
+    // Method to remove a value from the Tree
+    Node *removeFromTree(Node *currentNode, int value, bool &status)
+    {
+        // If the currentNode is nullptr
+        if (!currentNode)
+        {
+            // Return currentNode
+            return currentNode;
+        }
+
+        // If the given value is more than the currentNode's value
+        if (value > currentNode->value)
+        {
+            // Call the removeFromTree function with currentNode->right
+            currentNode->right = removeFromTree(currentNode->right, value, status);
+        }
+
+        // If the given value is less than or equal to the currentNode's value
+        if (value <= currentNode->value)
+        {
+            // Call the removeFromTree function with currentNode->left
+            currentNode->left = removeFromTree(currentNode->left, value, status);
+        }
+
+        // If the value was found
+        if (value == currentNode->value)
+        {
+            // If this node has no children
+            if (!currentNode->left && !currentNode->right)
+            {
+                // The currentNode has been successfully removed from the Tree
+                status = true;
+
+                // Simply pass nullptr to the parent Node
+                return nullptr;
+            }
+
+            // If this node has a left child ONLY
+            if (currentNode->left && !currentNode->right)
+            {
+                // The currentNode has been successfully removed from the Tree
+                status = true;
+
+                // Simply pass the left child to the parent Node
+                return currentNode->left;
+            }
+
+            // If this node has a right child ONLY
+            if (!currentNode->left && currentNode->right)
+            {
+                // The currentNode has been successfully removed from the Tree
+                status = true;
+
+                // Simply pass the right child to the parent Node
+                return currentNode->right;
+            }
+
+            // If this node has both the children
+            if (currentNode->left && currentNode->right)
+            {
+                // Find the Successor Node
+                Node *successor = currentNode->right;
+
+                while (successor->left)
+                {
+                    successor = successor->left;
+                }
+
+                // Now first take care of the successor's child
+                currentNode->right = removeFromTree(currentNode->right, successor->value, status);
+
+                // If the successor's child has been taken care of
+                if (status)
+                {
+                    // The successor node has now been disconnected.
+                    // Simply copy the left and right of th currentNode
+                    // to the successor Node
+                    // This way, we won't have to "move" the successor Node
+                    successor->left = currentNode->left;
+                    successor->right = currentNode->right;
+
+                    // Make the status true
+                    // as the currentNode has successfully been removed from the
+                    // Tree
+                    status = true;
+                }
+
+                // If the successor's child hasn't been taken care of
+                // It means that the removal of currentNode has been ONE GIGANTIC FAIL
+            }
+        }
+
+        // Everything done
+        // Return the currentNode
+        return currentNode;
+    }
+
 public:
     // Constructor
     SuperStructure(int size = 11)
@@ -263,6 +360,8 @@ public:
      * addToTree : adds the Node to the tree 
      * 
      * removeFromLinkedList : removes a value from the Linked List
+     * 
+     * removeFromTree : removes a value from the Tree
      */
 
     // Method to calculate the hash of the given key

@@ -129,16 +129,16 @@ public:
 
         // Add the Entry to the Hash Table
         // If the table[hash] is nullptr
-        if (!table[hash])
+        if (table[hash])
         {
             // An Entry already exists
             // Simple add the new Entry before the old one
             // 1 - newNode->next points to table[hash] (old Entry)
-            newNode->next = table[hash];
-
-            // Now point the table[hash] to the new Node
-            table[hash] = newNode;
+            newNode->nextInMap = table[hash];
         }
+
+        // Now point the table[hash] to the newNode
+        table[hash] = newNode;
 
         // Add the Node in the Linked List
         if (!addToLinkedList(newNode))
@@ -200,6 +200,9 @@ public:
             // Successful addition
             // Make the status to true
             status = true;
+
+            // Return currentNode
+            return currentNode;
         }
 
         // If the nodeToBeAdded's value is greater than the value
@@ -223,4 +226,7 @@ public:
         // Return the currentNode
         return currentNode;
     }
+
+    // Print Method
+    void print();
 };

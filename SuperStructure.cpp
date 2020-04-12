@@ -153,7 +153,7 @@ private:
 
         // If the nodeToBeAdded's key is greater than the key
         // of nodeToBeAdded
-        if (nodeToBeAdded->key > currentNode->value)
+        if (nodeToBeAdded->key > currentNode->key)
         {
             // Call the addToTree function again with
             // currentNode->right
@@ -438,6 +438,8 @@ public:
      * removeFromSuperStructure : removed an entry from the Super Structure 
      * 
      * printInAscendingOrder : prints the key-value pair in Ascending Order
+     * 
+     * printHashTable : prints the entire Hash Table
      */
 
     // Method to calculate the hash of the given key
@@ -492,12 +494,26 @@ public:
         }
     }
 
-    // Print Method
-    void print();
+    // Method to print the Entire Hash Table
+    void printHashTable()
+    {
+        cout << "\nHash Table : \n\n";
 
-    // Print LL
-    void printLL();
+        // Go over each row
+        for (int i = 0; i < this->size; i++)
+        {
+            // Print the row number
+            cout << i << " ==> ";
 
-    // Print Tree
-    void printT();
+            // Print all the Entries in that row
+            for (Node *currentNode = table[i]; currentNode; currentNode = currentNode->nextInMap)
+            {
+                // Print the key-value pair
+                cout << "[Key : " << currentNode->value << ", Value : " << currentNode->value << "] ";
+            }
+
+            // Change the line after a row has been printed
+            cout << endl;
+        }
+    }
 };

@@ -516,4 +516,24 @@ public:
             cout << endl;
         }
     }
+
+    // Method to print the Insertion Sequence
+    void printInsertionSequence()
+    {
+        cout << "\n\nInsertion Sequence : " << endl;
+        // Start from the head
+        cout << "HEAD";
+
+        // Go until current Node becomes null
+        for (Node *currentNode = head; currentNode; currentNode = currentNode->next)
+        {
+            // Print the key-value pair
+            cout << " ==> "
+                 << "[Key : " << currentNode->key << ", Value : " << currentNode->value << "]";
+        }
+
+        // Once the Linked List has been printed
+        // Print a blank line for better formatting
+        cout << endl;
+    }
 };

@@ -172,14 +172,14 @@ class SuperStructure
         return currentNode;
     }
 
-    // Method to remove a value from the Linked List
-    bool removeFromLinkedList(int value)
+    // Method to remove a key-value pair from the Linked List
+    bool removeFromLinkedList(int key)
     {
-        // Search for the given value
+        // Search for the given key
         for (Node *currentNode = head, *peechu = head; currentNode; currentNode = currentNode->next)
         {
             // If the value is found
-            if (value == currentNode->value)
+            if (key == currentNode->key)
             {
                 // If this is the ONLY Node in the Linked List
                 if (head == tail)
@@ -222,17 +222,17 @@ class SuperStructure
                 return true;
             }
 
-            // Value not found
+            // Key not found
             // Make the peechu jump ahead
             peechu = currentNode;
         }
 
-        // Value not found in the Linked List
+        // Key not found in the Linked List
         // Return false
         return false;
     }
 
-    // Method to remove a value from the Tree
+    // Method to remove a key-value pair from the Tree
     Node *removeFromTree(Node *currentNode, int key, bool &status)
     {
         // If the currentNode is nullptr

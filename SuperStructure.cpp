@@ -167,17 +167,13 @@ private:
     }
 
     // Method to add the Node to the Tree
-    Node *addToTree(Node *nodeToBeAdded, Node *currentNode, bool &status)
+    Node *addToTree(Node *nodeToBeAdded, Node *currentNode)
     {
         // If the currentNode is nullptr
         if (!currentNode)
         {
             // Assign the nodeToBeAdded to the currentNode
             currentNode = nodeToBeAdded;
-
-            // Successful addition
-            // Make the status to true
-            status = true;
 
             // Return currentNode
             return currentNode;
@@ -189,7 +185,7 @@ private:
         {
             // Call the addToTree function again with
             // currentNode->right
-            currentNode->right = addToTree(nodeToBeAdded, currentNode->right, status);
+            currentNode->right = addToTree(nodeToBeAdded, currentNode->right);
         }
 
         // If the nodeToBeAdded's key is less than or equal to
@@ -198,7 +194,7 @@ private:
         {
             // Call the addToTree function with
             // currentNode->left
-            currentNode->left = addToTree(nodeToBeAdded, currentNode->left, status);
+            currentNode->left = addToTree(nodeToBeAdded, currentNode->left);
         }
 
         // Return the currentNode
@@ -450,10 +446,10 @@ public:
      */
 
     // Method to add the Entry to the Super Structure
-    bool put(int key, int value)
+    bool put(int keyToBeAdded, int value)
     {
         // Create a newNode
-        Node *newNode = new Node(key, value);
+        Node *newNode = new Node(keyToBeAdded, value);
 
         // If the allocation failed
         if (!newNode)
@@ -463,34 +459,40 @@ public:
         }
 
         // Allocation successful
-        // Add the Node to the Hash Table
-        if (!putInHashTable(key, value, newNode))
+        // Get the hash of the key
+        int hash = getHash(keyToBeAdded);
+
+        // Check if the key already exists in the Hash Table
+        for (Node *currentNode = table[hash]; currentNode; currentNode = currentNode->nextInMap)
         {
-            // Addition to the Hash Table failed
+            // If the duplicate key is found
             // Return false
-            return false;
+            // Addition to the Super Structure failed
+            if (keyToBeAdded == currentNode->key)
+                return false;
         }
 
-        // Add the Node in the Linked List
-        if (!addToLinkedList(newNode))
-        {
-            // Addition to the Linked List failed
-            // return false
-            return false;
-        }
+        // Adding this key for the first time in the Hash Table
+        newNode->nextInMap = table[hash];
+        table[hash] = newNode;
 
-        // Check the status of addition to Tree
-        bool status = false;
+        // If this is the first Node in the Linked List
+        if (head == nullptr)
+            head = newNode;
 
-        // Add the Node in the BST
-        root = addToTree(newNode, root, status);
+        // This is not the first Node in the Linked List
+        else
+            tail->next = newNode;
 
-        // If the addition to the Tree failed
-        if (!status)
-        {
-            // Return false
-            return false;
-        }
+        // Move the tail ahead
+        tail = newNode;
+
+        // Finally, add the newNode in the Tree
+        root = addToTree(newNode, root);
+
+        // Addition complete
+        // return true
+        return true;
     }
 
     // Method that prints the key-value pair in Ascending Order

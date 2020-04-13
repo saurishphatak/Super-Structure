@@ -199,7 +199,7 @@ private:
     }
 
     // Method to remove a key-value pair from the Tree
-    Node *removeFromTree(Node *currentNode, int key, bool &status)
+    Node *removeFromTree(Node *currentNode, int key)
     {
         // If the currentNode is nullptr
         if (!currentNode)
@@ -212,14 +212,14 @@ private:
         if (key > currentNode->key)
         {
             // Call the removeFromTree function with currentNode->right
-            currentNode->right = removeFromTree(currentNode->right, key, status);
+            currentNode->right = removeFromTree(currentNode->right, key);
         }
 
         // If the given key is less than the currentNode's key
         if (key < currentNode->key)
         {
             // Call the removeFromTree function with currentNode->left
-            currentNode->left = removeFromTree(currentNode->left, key, status);
+            currentNode->left = removeFromTree(currentNode->left, key);
         }
 
         // If the key was found
@@ -228,9 +228,6 @@ private:
             // If this node has no children
             if (!currentNode->left && !currentNode->right)
             {
-                // The currentNode has been successfully removed from the Tree
-                status = true;
-
                 // Simply pass nullptr to the parent Node
                 return nullptr;
             }
@@ -238,9 +235,6 @@ private:
             // If this node has a left child ONLY
             if (currentNode->left && !currentNode->right)
             {
-                // The currentNode has been successfully removed from the Tree
-                status = true;
-
                 // Simply pass the left child to the parent Node
                 return currentNode->left;
             }
@@ -248,9 +242,6 @@ private:
             // If this node has a right child ONLY
             if (!currentNode->left && currentNode->right)
             {
-                // The currentNode has been successfully removed from the Tree
-                status = true;
-
                 // Simply pass the right child to the parent Node
                 return currentNode->right;
             }
@@ -267,23 +258,14 @@ private:
                 }
 
                 // Now first take care of the successor's child
-                currentNode->right = removeFromTree(currentNode->right, successor->key, status);
+                currentNode->right = removeFromTree(currentNode->right, successor->key);
 
-                // If the successor's child has been taken care of
-                if (status)
-                {
-                    // The successor node has now been disconnected.
-                    // Simply copy the left and right of th currentNode
-                    // to the successor Node
-                    // This way, we won't have to "move" the successor Node
-                    successor->left = currentNode->left;
-                    successor->right = currentNode->right;
-
-                    // Make the status true
-                    // as the currentNode has successfully been removed from the
-                    // Tree
-                    status = true;
-                }
+                // The successor node has now been disconnected.
+                // Simply copy the left and right of th currentNode
+                // to the successor Node
+                // This way, we won't have to "move" the successor Node
+                successor->left = currentNode->left;
+                successor->right = currentNode->right;
 
                 // If the successor's child hasn't been taken care of
                 // It means that the removal of currentNode has been ONE GIGANTIC FAIL
@@ -493,6 +475,42 @@ public:
         // Get the hash of the key
         int hash = getHash(keyToBeRemoved);
 
-        // TODO
+        // Find the key in the Hash Table
+        for (Node *currentNode = table[hash], *peechu = table[hash]; currentNode; currentNode = currentNode->nextInMap)
+        {
+            // If the key is found
+            if (keyToBeRemoved == currentNode->key)
+            {
+                // Remove the currentNode from the Linked List
+                currentNode->previous->next = currentNode->next;
+                currentNode->next->previous = currentNode->previous;
+
+                // Now remove it from the Tree
+                root = removeFromTree(root, keyToBeRemoved);
+
+                // Remove it from the Hash Table
+                // If this was the ONLY Node in the row
+                if (!table[hash]->nextInMap)
+                {
+                    // Set the table[hash] to nullptr
+                    table[hash] = nullptr;
+                }
+
+                // If collision entries exist
+                // Simply make the previous collision entry
+                // jump over the current entry
+                else
+                    peechu->nextInMap = currentNode->nextInMap;
+
+                // Now delete the currentNode and return true
+                delete currentNode;
+
+                return true;
+            }
+        }
+
+        // The key wasn't found in the Hash Table
+        // return false
+        return false;
     }
 };

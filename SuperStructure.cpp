@@ -86,12 +86,8 @@ private:
      * 
      * addToTree : adds the key-value pair to the Tree
      * 
-     * removeFromLinkedList : removes the key-value pair from the Linked List
-     * 
      * removeFromTree : removes the key-value pair from the Tree
-     * 
-     * removeFromHashTable : removes the key-value from the Hash Table
-     * 
+     *
      * printAscendingOrder : prints the key-value pair in Ascending Order on
      *                       the basis of key
      */
@@ -136,66 +132,6 @@ private:
 
         // Return the currentNode
         return currentNode;
-    }
-
-    // Method to remove a key-value pair from the Linked List
-    bool removeFromLinkedList(int key)
-    {
-        // Search for the given key
-        for (Node *currentNode = head, *peechu = head; currentNode; currentNode = currentNode->next)
-        {
-            // If the value is found
-            if (key == currentNode->key)
-            {
-                // If this is the ONLY Node in the Linked List
-                if (head == tail)
-                {
-                    // Simply make the head and tail nullptr
-                    head = tail = nullptr;
-
-                    // Return true
-                    return true;
-                }
-
-                // If this Node is the FIRST Node in the Linked List
-                if (head == currentNode)
-                {
-                    // Simply make the head point to the next Node
-                    head = head->next;
-
-                    // Return true
-                    return true;
-                }
-
-                // If this is the LAST Node in the Linked List
-                if (tail == currentNode)
-                {
-                    // Simply point the tail to the previous Node
-                    tail = peechu;
-
-                    // Make peechu's next as null
-                    peechu->next = nullptr;
-
-                    // Return true
-                    return true;
-                }
-
-                // If the node is in BETWEEN
-                // Point the peechu's next to the next Node
-                peechu->next = currentNode->next;
-
-                // Return true
-                return true;
-            }
-
-            // Key not found
-            // Make the peechu jump ahead
-            peechu = currentNode;
-        }
-
-        // Key not found in the Linked List
-        // Return false
-        return false;
     }
 
     // Method to remove a key-value pair from the Tree
@@ -278,39 +214,6 @@ private:
         // Everything done
         // Return the currentNode
         return currentNode;
-    }
-
-    // Method to remove a key-value pair from the Hash Table
-    bool removeFromHashTable(int key)
-    {
-        // Find the hash of the given value
-        int hash = getHash(key);
-
-        // If the table[hash] is not empty
-        if (table[hash])
-        {
-            // It means that there are MORE THAN ONE
-            // Entries in this row
-
-            // Capture the current Entry pointed to
-            // by the table[hash]
-            Node *currentEntry = table[hash];
-
-            // Simply point the table[hash] to the
-            // next Entry in the row
-            table[hash] = currentEntry->nextInMap;
-
-            // Delete the current Entry
-            delete currentEntry;
-
-            // Removal from Super Structure successful
-            // return true
-            return true;
-        }
-
-        // Removal from the Super Structure unsuccessful
-        // return false
-        return false;
     }
 
     // Method to print values in Ascending Order

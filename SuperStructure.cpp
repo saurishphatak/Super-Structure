@@ -22,6 +22,19 @@
  * 2020-April-11	[SP]: put() method completed.
  * 2020-April-09	[SP] : Created.
  * --------------------------------------------------------------------------------
+ * "Copyright (c) 2020 Saurish Phatak
+ * 
+ * Lisence : 
+ * 
+ *      This code is meant for learning.
+ *      DO NOT Copy Paste it.
+ *      You are required to understand and then type it yourself.
+ * 
+ * DISCLAIMER : 
+ *          
+ *      This code may contain intentional or unintentional bugs.
+ *      There are no guarantees of this code working correctly.
+ * -------------------------------------------------------------------------------- 
  */
 
 #include <iostream>

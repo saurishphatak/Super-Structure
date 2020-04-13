@@ -9,6 +9,8 @@
  * --------------------------------------------------------------------------------
  * 
  * Revision History : 
+ * 2020-April-13	[SP]: addToLinkedList() and putInHashTable() methods removed.
+ * 2020-April-13	[SP]: put() method modified.
  * 2020-April-12	[SP]: remove() method completed.
  * 2020-April-12	[SP]: printInAscendingOrder() method completed.
  * 2020-April-12	[SP]: printInsertionSequence() method completed.

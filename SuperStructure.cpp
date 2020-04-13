@@ -80,10 +80,6 @@ private:
      * 
      * getHash() : calculates the hash of the given key
      * 
-     * putInHashTable : adds the key-value pair in the Hash Table
-     * 
-     * addToLinkedList : adds the key-value pair in the Linked List
-     * 
      * addToTree : adds the key-value pair to the Tree
      * 
      * removeFromLinkedList : removes the key-value pair from the Linked List
@@ -101,69 +97,6 @@ private:
     {
         // Return key % size
         return key % this->size;
-    }
-
-    // Method to add the Node in the Hash Table
-    bool putInHashTable(int key, int value, Node *nodeToBeAdded)
-    {
-        // If the node to be added is nullptr
-        if (!nodeToBeAdded)
-        {
-            // Addition to the Hash Table failed
-            // return false
-            return false;
-        }
-
-        // If the node to be added is not nullptr
-        // Find the hash of the key
-        int hash = getHash(key);
-
-        // If the table[hash] is full
-        if (table[hash])
-        {
-            // It means that another Node with the same key
-            // already exists
-            // Add the new Node before the old Node
-            // Point the node to be added's nextInMap to
-            // the existing Node at table[hash]
-            nodeToBeAdded->nextInMap = table[hash];
-        }
-
-        // If the table[hash] is not full
-        // Or the new Node has been added before the
-        // old Node
-        // Simply point the table[hash] to the new Node
-        table[hash] = nodeToBeAdded;
-
-        // Addition to the Hash Table successful
-        // Return true
-        return true;
-    }
-
-    // Method to add the Node to the Linked List
-    bool addToLinkedList(Node *nodeToBeAdded)
-    {
-        // If the head and tail are null
-        if (!head && !tail)
-        {
-            // It means this is the first Node
-            // Point the head to this Node
-            head = nodeToBeAdded;
-        }
-
-        // If this is not the first Node
-        else
-        {
-            // Add the new Node after the tail
-            tail->next = nodeToBeAdded;
-        }
-
-        // Point the tail to the new Node
-        tail = nodeToBeAdded;
-
-        // Addition successful
-        // return true
-        return true;
     }
 
     // Method to add the Node to the Tree

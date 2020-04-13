@@ -31,6 +31,7 @@ struct Node
     /**
      * Fields :
      * 
+     * previous : points to the previous node in the Linked List
      * left : points to the left child of the node
      * key : holds the key of the node
      * value : holds the value of the node
@@ -38,6 +39,7 @@ struct Node
      * next : points to the next node in the Linked List
      * nextInMap : points to the next node with the same hash
      */
+    Node *previous;
     Node *left;
     int key;
     int value;
@@ -360,8 +362,13 @@ public:
             table[i] = nullptr;
 
         // Initialize rest of the fields
-        head = nullptr;
-        tail = nullptr;
+        head = new Node(0, 0); // Sentinel Node
+        tail = new Node(0, 0); // Sentinel Node
+
+        // Initially, the head and tail point to each other
+        head->next = tail;
+        tail->previous = head;
+
         root = nullptr;
     }
 
@@ -411,16 +418,14 @@ public:
         newNode->nextInMap = table[hash];
         table[hash] = newNode;
 
-        // If this is the first Node in the Linked List
-        if (head == nullptr)
-            head = newNode;
+        // Add the newly created Node in the Linked List
+        // Make the new Node climb on to the Linked List
+        newNode->next = tail;
+        newNode->previous = tail->previous;
 
-        // This is not the first Node in the Linked List
-        else
-            tail->next = newNode;
-
-        // Move the tail ahead
-        tail = newNode;
+        // Now pull the new Node onto the Linked List
+        newNode->previous->next = newNode;
+        tail->previous = newNode;
 
         // Finally, add the newNode in the Tree
         root = addToTree(newNode, root);
@@ -470,7 +475,7 @@ public:
         cout << "HEAD";
 
         // Go until current Node becomes null
-        for (Node *currentNode = head; currentNode; currentNode = currentNode->next)
+        for (Node *currentNode = head->next; currentNode != tail; currentNode = currentNode->next)
         {
             // Print the key-value pair
             cout << " ==> "
@@ -483,37 +488,11 @@ public:
     }
 
     // Method to remove a key-value pair from Super Structure
-    bool remove(int key)
+    bool remove(int keyToBeRemoved)
     {
-        // If the key-value pair is removed from the Linked List
-        if (removeFromLinkedList(key))
-        {
-            // Remove the key-value from the Tree
-            bool status = false;
+        // Get the hash of the key
+        int hash = getHash(keyToBeRemoved);
 
-            root = removeFromTree(root, key, status);
-
-            // If the removal from the Tree is sucessful
-            if (status)
-            {
-                // Finally, remove the key-value from the Hash Table
-                // thereby removing it from the Super Structure itself
-                if (removeFromHashTable(key))
-                {
-                    // Successful deletion from the Hash Table
-                    // key-value pair removed from the Super Structure
-                    // return true
-                    return true;
-                }
-            }
-
-            // Removal from Tree unsuccessful
-            // return false
-            return false;
-        }
-
-        // Removal from the Linked List unsuccessful
-        // return false
-        return false;
+        // TODO
     }
 };

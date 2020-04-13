@@ -38,11 +38,11 @@ int main()
         test->put(key, value);
     }
 
-    // Print Tree
-    test->printInAscendingOrder();
+    // Print the Linked List
+    test->printInsertionSequence();
 
     // Remove some value
-    test->remove(10);
+    test->remove(5);
 
     test->printInsertionSequence();
     test->printInAscendingOrder();

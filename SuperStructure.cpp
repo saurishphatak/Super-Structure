@@ -9,6 +9,9 @@
  * --------------------------------------------------------------------------------
  * 
  * Revision History : 
+ * 2020-April-13	[SP]: removeFromLinkedList() and removeFromHashTable() methods
+ *                        removed.
+ * 2020-April-13	[SP]: remove() method modified.
  * 2020-April-13	[SP]: addToLinkedList() and putInHashTable() methods removed.
  * 2020-April-13	[SP]: put() method modified.
  * 2020-April-12	[SP]: remove() method completed.

@@ -24,7 +24,7 @@ int main()
     int value;
 
     // Create a new Super Structure
-    SuperStructure *test = new SuperStructure(11);
+    SuperStructure *test = new SuperStructure(10);
 
     // Take input of key-value pairs
     while (cout << "Key (0 to stop) :",
@@ -42,7 +42,7 @@ int main()
     test->printInAscendingOrder();
 
     // Remove some value
-    test->remove(3);
+    test->remove(10);
 
     test->printInsertionSequence();
     test->printInAscendingOrder();
